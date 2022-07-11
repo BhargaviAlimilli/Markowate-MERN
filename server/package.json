@@ -9,14 +9,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/BhargaviAlimilli/MERN-TNC.git"
+    "url": "git+https://github.com/BhargaviAlimilli/Markowate-MERN.git"
   },
   "author": "Bhargavi Alimilli",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/BhargaviAlimilli/MERN-TNC/issues"
+    "url": "https://github.com/BhargaviAlimilli/Markowate-MERN/issues"
   },
-  "homepage": "https://github.com/BhargaviAlimilli/MERN-TNC#readme",
+  "homepage": "https://github.com/BhargaviAlimilli/Markowate-MERN#readme",
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
