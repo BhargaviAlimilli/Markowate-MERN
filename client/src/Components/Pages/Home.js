@@ -1,25 +1,31 @@
 import React, {useState, useEffect} from 'react'
 import {toast} from 'react-toastify'
 import {outlets} from "../../actions/outlets"
+import {useSelector} from 'react-redux'
+
 function Home(){
     const [code, setcode] = useState("")
-    const [data,setData]=useState([])
+    const [dataset,setDataset]=useState([])
+    const { auth } = useSelector((state) => ({ ...state }));
+    const {data} = auth
+    const {access_token}= data
 
 
     const handleSubmit= async(e)=>{
+        console.log(access_token)
+        console.log(outlets)
+
         try{
-            const res = await outlets({outlet_code:code})    
-            // console.log(res.data.data)
+            const res = await outlets({outlet_code:code}, access_token)    
+            console.log(access_token)
             if(res.data.status==="Ok" && res.data.data.length>0){
-                setData(res.data.data)                
+                setDataset(res.data.data)                
             }
         } catch (err) {
-          console.log(err)
-          toast.error(err.response.data)
-
+          toast.warning(err.response.data)
         }        
     }
-
+    
     useEffect(()=>{
         handleSubmit()
     }, [code])
@@ -36,11 +42,20 @@ function Home(){
 
             <input type='submit' value='Search' />
         </form>
-        {data.length>0 && data.map(item=>{
-        return <h5>{JSON.stringify(item)}</h5>
-        })}
+        {dataset.length>0 && dataset.map((item,i)=>{
+        return(
+            <div key={i}>
+            <h5>Record: {i+1} </h5>
+            <h6>Outlet Name: {item.outlet_name}</h6>
+            <p>outlet code: {item.outlet_code}</p>
+            <p>Town Name: {item.town_name}</p>
+            <p>Town code: {item.town_code}</p>
+            <p>Route name: {item.route_name}</p>  
+            <hr/>          
+            </div>
+        )})}
 
-        {data.length<=0 && <h6>Enter valid outlet code</h6>}
+        {dataset.length<=0 && <h6>Enter valid outlet code</h6>}
 
 
         </div>

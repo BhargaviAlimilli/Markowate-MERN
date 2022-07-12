@@ -6,7 +6,7 @@ exports.outlet= async (req,res)=>{
     try{  
         let data=[]
         if(!req.body.outlet_code){
-            return res.status(400).send("please provide outlet code")
+            return res.status(422).send("please provide outlet code")
         }
         if(req.body.outlet_code){
             Data.outletData.map(item =>{

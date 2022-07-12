@@ -68,9 +68,15 @@ exports.register= async (req,res)=>{
         console.log(user)
         const token= jwt.sign({_id: user.id}, process.env.JWT_SECRET_KEY)
         res.status(200).json({
-            status:"success",
-            token,
-            user
+            status:"Ok",
+            data:{
+                status: "LOGGED_IN",
+                userData:{
+                    id: user.id,
+                    user_name: user.name
+                },
+                access_token: token
+            },
         })
     }catch(err){
         res.status(400).json({
@@ -81,4 +87,12 @@ exports.register= async (req,res)=>{
     }
 }
 
-
+//middleware to check whether the user is loggedIN
+exports.isLoggedin= (req,res,next)=>{
+    console.log(req.headers, "headers here")
+    const token = req.headers.authorization.split(' ')[1]
+    console.log(token, "token here")  
+   const user=  jwt.verify(token,process.env.JWT_SECRET_KEY)
+   req.user=user
+   next()
+}
